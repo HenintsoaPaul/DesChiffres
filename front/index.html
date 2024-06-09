@@ -3,17 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Des Chiffres</title>
+
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-    <h3>Des Chiffres</h3>
-
     <div class="card">
-        <div class="timerContainer">
-            <span class="timer">01:00</span>
+        <div class="card-body">
+            <div class="timerContainer">
+                <span id="timer">01:00</span>
+                <button class="btn btn-success" id="startBtn">Start</button>
+            </div>
         </div>
-        <button>Start</button>
     </div>
 
     <script src="./node_modules/angular/angular.js"></script>
+    <script src="./js/timer.js"></script>
 </body>
 </html>

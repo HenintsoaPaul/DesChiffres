@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'Stapel';
+    src: url('./fonts/Stapel_Bold.otf') format('opentype');
+    font-weight: bold;
+}
+
+body {
+    font-family: 'Stapel', serif;
+    font-weight: bold;
+}
+
+.timerContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#timer {
+    font-size: 70px;
+}
