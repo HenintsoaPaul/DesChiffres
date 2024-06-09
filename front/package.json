@@ -1,0 +1,14 @@
+{
+  "name": "des_chiffres_front",
+  "version": "1.0.0",
+  "description": "Front of the application. Using AngularJS to handle UI interactions, and take data from the server.",
+  "main": "index.html",
+  "scripts": {
+    "update": "npm install"
+  },
+  "author": "Henintsoa Paul",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "angular": "^1.8.3"
+  }
+}
