@@ -9,6 +9,7 @@
   "author": "Henintsoa Paul",
   "license": "UNLICENSED",
   "dependencies": {
-    "angular": "^1.8.3"
+    "angular": "^1.8.3",
+    "bootstrap": "^5.3.3"
   }
 }
