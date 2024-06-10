@@ -9,6 +9,16 @@ body {
     font-weight: bold;
 }
 
+input {
+    display: block;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .timerContainer {
     display: flex;
     flex-direction: column;

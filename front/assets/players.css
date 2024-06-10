@@ -1,0 +1,29 @@
+.playersContainer {
+    height: 100%;
+    margin: 20px 0;
+    padding: 10px 0;
+}
+
+.playerContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.pointContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+form {
+    font-weight: normal;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 10px;
+}
+
+input {
+    border-radius: 5px;
+}
