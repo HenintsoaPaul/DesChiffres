@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="assets/numbers.css">
     <link rel="stylesheet" href="assets/style.css">
 
-    <script src="./js/timer.js"></script>
-
     <script src="./node_modules/angular/angular.js"></script>
     <script src="./node_modules/angular-route/angular-route.js"></script>
     <script src="./js/app.js"></script>
@@ -22,7 +20,7 @@
         <div class="card-body">
             <div class="timerContainer">
                 <span id="timer">01:00</span>
-                <button ng-click="getNumbers()" class="btn btn-success" id="startBtn">Start</button>
+                <button ng-click="startCountdown()" class="btn btn-success" id="startBtn">Start</button>
             </div>
         </div>
     </div>
@@ -46,7 +44,7 @@
             <div class="validationContainer center">
                 <form action="#" method="POST">
                     <input type="number" name="nbP1" id="nbP1"/>
-                    <input class="btn btn-success" type="button" value="Submit"/>
+                    <input id="btnSubmitP1" class="btn btn-success" type="button" value="Submit"/>
                 </form>
             </div>
         </div>
@@ -59,7 +57,7 @@
             <div class="validationContainer center">
                 <form action="#" method="POST">
                     <input type="number" name="nbP2" id="nbP2"/>
-                    <input class="btn btn-success" type="button" value="Submit"/>
+                    <input id="btnSubmitP2" class="btn btn-success" type="button" value="Submit"/>
                 </form>
             </div>
         </div>
