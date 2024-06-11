@@ -5,19 +5,65 @@
     <title>Des Chiffres</title>
 
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/players.css">
+    <link rel="stylesheet" href="assets/numbers.css">
     <link rel="stylesheet" href="assets/style.css">
+
+    <script src="./js/timer.js"></script>
+
+    <script src="./node_modules/angular/angular.js"></script>
+    <script src="./node_modules/angular-route/angular-route.js"></script>
+    <script src="./js/app.js"></script>
 </head>
-<body>
+<body ng-app="DesChiffresApp">
+<div ng-controller="mainCtrl">
+
     <div class="card">
         <div class="card-body">
             <div class="timerContainer">
                 <span id="timer">01:00</span>
-                <button class="btn btn-success" id="startBtn">Start</button>
+                <button ng-click="getNumbers()" class="btn btn-success" id="startBtn">Start</button>
             </div>
         </div>
     </div>
 
-    <script src="./node_modules/angular/angular.js"></script>
-    <script src="./js/timer.js"></script>
+    <div class="row center" id="nbContainer">
+        <div class="center" id="nbGuessContainer">
+            <span id="nbGuess-item">{{ numbers['nbGuess'] }}</span>
+        </div>
+
+        <div class="center" id="nbToolsContainer">
+            <span ng-repeat="value in numbers['nbTools']" ng-class="'btn btn-primary'">{{ value }}</span>
+        </div>
+    </div>
+
+    <div class="row playersContainer">
+        <div class="col-6 playerContainer center" id="p1Container">
+            <div class="pointContainer">
+                <!--            <span class="player">Player 1</span>-->
+                <span class="score">0 Points</span>
+            </div>
+            <div class="validationContainer center">
+                <form action="#" method="POST">
+                    <input type="number" name="nbP1" id="nbP1"/>
+                    <input class="btn btn-success" type="button" value="Submit"/>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-6 playerContainer center" id="p2Container">
+            <div class="pointContainer">
+                <!--            <span class="player">Player 2</span>-->
+                <span class="score">0 Points</span>
+            </div>
+            <div class="validationContainer center">
+                <form action="#" method="POST">
+                    <input type="number" name="nbP2" id="nbP2"/>
+                    <input class="btn btn-success" type="button" value="Submit"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
