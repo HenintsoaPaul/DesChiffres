@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
         clearInterval(intervalId); // Clear any existing interval
 
         const seconds_length = 60;
-        const startTime = new Date().getTime() + (seconds_length * 1000);
-        const endTime = new Date(startTime).getTime();
+        const startTime = new Date().getTime();
+        const endTime = new Date(startTime).getTime() + (seconds_length * 1000);
         intervalId = setInterval(function () {
             const remainingTime = endTime - new Date().getTime();
 
