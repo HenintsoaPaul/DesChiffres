@@ -64,18 +64,22 @@ app.controller("mainCtrl", ['$scope', '$http', function ($scope, $http) {
     document.getElementById("btnSubmitP1").addEventListener("click", function (event) {
         event.preventDefault();
         const nbP1 = inputP1.value !== "" ? inputP1.value : -1;
-        $scope.p1Validation = {
-            'nb': nbP1,
-            'time': timer.textContent
-        };
+        if (nbP1 !== -1) {
+            $scope.p1Validation = {
+                'nb': nbP1,
+                'time': timer.textContent
+            };
+        }
     });
     document.getElementById("btnSubmitP2").addEventListener("click", function (event) {
         event.preventDefault();
         const nbP2 = inputP2.value !== "" ? inputP2.value : -1;
-        $scope.p2Validation = {
-            'nb': nbP2,
-            'time': timer.textContent
-        };
+        if (nbP2 !== -1) {
+            $scope.p2Validation = {
+                'nb': nbP2,
+                'time': timer.textContent
+            };
+        }
     });
 
     // Get Inputs
@@ -104,6 +108,22 @@ app.controller("mainCtrl", ['$scope', '$http', function ($scope, $http) {
 
         console.log(`p1: ${nbp1} and p2: ${nbp2}`);
         console.log(`t1: ${t1} and t2: ${t2}`);
+
+        if (nbp1 === -1 && nbp2 === -1) {
+            console.log("No Winner");
+        }
+
+        else if (nbp1 === -1 && nbp2 !== -1) {
+            console.log("Winner 2");
+        }
+
+        else if (nbp1 !== -1 && nbp2 === -1) {
+            console.log("Winner 1");
+        }
+
+        else {
+            console.log("Both validates");
+        }
     }
 }]);
 
