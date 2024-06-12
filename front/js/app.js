@@ -122,6 +122,51 @@ app.controller("mainCtrl", ['$scope', '$http', function ($scope, $http) {
         }
 
         else {
+            $scope.justify();
+            $scope.verifyJustification();
+        }
+    }
+
+    // JUSTIFICATION
+    const inpJustify = document.getElementById("inpJustify");
+    const operationsElmnts = document.getElementsByClassName("op");
+    const nbToolsElmnts = document.getElementsByClassName("nb-tool");
+
+    $scope.justify = function () {
+        console.log(`Player ${$scope.willJustify} is justifying...`);
+        $scope.showJustify = true;
+
+        for (let i = 0; i < operationsElmnts.length; i++) {
+            let op = operationsElmnts[i];
+            op.addEventListener("click", function () {
+                console.log("You clicked an operation.");
+                console.log(op.textContent);
+
+                inpJustify.value += op.textContent + " ";
+            })
+        }
+        for (let i = 0; i < nbToolsElmnts.length; i++) {
+            let nbTool = nbToolsElmnts[i];
+            nbTool.addEventListener("click", function () {
+                console.log("You clicked a nb tool.");
+                console.log(nbTool.textContent);
+
+                inpJustify.value += nbTool.textContent + " ";
+            })
+        }
+
+        $scope.sumJustification = 5;
+    }
+
+    // VERIFY JUSTIFICATION
+    $scope.verifyJustification = function () {
+        const idPlayer = $scope.willJustify;
+        const nbGuess = $scope.numbers['nbGuess'];
+
+        if ($scope.sumJustification === nbGuess) {
+            $scope.idWinner = idPlayer;
+
+            console.log(`Player ${idPlayer} is right. Winner is ${$scope.idWinner}.`);
             console.log("Both validates");
         }
     }
