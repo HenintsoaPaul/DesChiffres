@@ -31,7 +31,7 @@
             <span id="nbGuess-item">{{ numbers['nbGuess'] }}</span>
         </div>
 
-        <div class="center" id="nbToolsContainer">
+        <div class="center nbToolsContainer">
             <span ng-repeat="value in numbers['nbTools']" ng-class="'btn btn-primary'">{{ value }}</span>
         </div>
     </div>
@@ -68,19 +68,26 @@
     </div>
     <!--  PLAYERS  -->
 
-<!--  JUSTIFICATION  -->
+    <!--  JUSTIFICATION  -->
     <div ng-show="showJustify" class="center justifyContainer">
-        <h2>Player {{ willJustify }}, please provide justification!</h2>
-        <div class="nbTools">
+
+        <!-- MESSAGE -->
+        <h1 ng-if="idWinner !== null" class="alert alert-success">Winner is {{ idWinner }}</h1>
+        <h2 ng-if="idWinner === null">Player {{ willJustify }}, please provide justification!</h2>
+        <!-- MESSAGE -->
+
+        <hr>
+        <div class="center nbToolsContainer">
             <span ng-repeat="value in numbers['nbTools']" ng-class="'btn btn-primary nb-tool'">{{ value }}</span>
         </div>
+        <br>
         <div class="operations">
-            <span class="btn btn-primary op" id="operation_+">+</span>
-            <span class="btn btn-primary op" id="operation_-">-</span>
-            <span class="btn btn-primary op" id="operation_*">*</span>
-            <span class="btn btn-primary op" id="operation_/">/</span>
-            <span class="btn btn-primary op" id="operation_(">(</span>
-            <span class="btn btn-primary op" id="operation_)">)</span>
+            <span class="btn btn-danger op" id="operation_+">+</span>
+            <span class="btn btn-danger op" id="operation_-">-</span>
+            <span class="btn btn-danger op" id="operation_*">*</span>
+            <span class="btn btn-danger op" id="operation_/">/</span>
+            <span class="btn btn-danger op" id="operation_(">(</span>
+            <span class="btn btn-danger op" id="operation_)">)</span>
         </div>
         <br>
         <form action="#">
@@ -88,7 +95,7 @@
             <input class="btn btn-warning" type="submit" value="Justify" id="submitJustify">
         </form>
     </div>
-<!--  JUSTIFICATION  -->
+    <!--  JUSTIFICATION  -->
 </div>
 </body>
 </html>

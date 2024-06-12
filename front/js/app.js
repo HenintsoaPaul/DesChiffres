@@ -10,6 +10,16 @@ app.controller("mainCtrl", ['$scope', '$http', function ($scope, $http) {
     $scope.idWinner = null;
     $scope.sumJustification = null;
 
+    $scope.clearVariables = function () {
+        $scope.p1Validation = null;
+        $scope.p2Validation = null;
+        $scope.willJustify = null;
+        $scope.sumJustification = null;
+        $scope.idWinner = null;
+        $scope.showJustify = false;
+        inpJustify.value = '';
+    }
+
     // Get numbers from C# API
     $scope.getNumbers = function () {
         return $http({
@@ -27,6 +37,7 @@ app.controller("mainCtrl", ['$scope', '$http', function ($scope, $http) {
     let intervalId;
     const timer = document.getElementById('timer');
     $scope.startCountdown = function () {
+        $scope.clearVariables();
         $scope.getNumbers();
 
         clearInterval(intervalId);
@@ -58,14 +69,6 @@ app.controller("mainCtrl", ['$scope', '$http', function ($scope, $http) {
             $scope.getInputs();
             $scope.getWinner();
         })
-
-        $scope.p1Validation = null;
-        $scope.p2Validation = null;
-        $scope.willJustify = null;
-        $scope.sumJustification = null;
-        $scope.idWinner = null;
-        $scope.showJustify = false;
-        inpJustify.value = '';
     };
 
     // Set Values on Validation
@@ -162,7 +165,6 @@ app.controller("mainCtrl", ['$scope', '$http', function ($scope, $http) {
         }
         else {
             $scope.justify();
-            $scope.verifyJustification();
         }
     }
 
@@ -195,8 +197,6 @@ app.controller("mainCtrl", ['$scope', '$http', function ($scope, $http) {
                 nbTool.remove();
             })
         }
-
-        $scope.sumJustification = 5;
     }
 
     // SUBMIT JUSTIFICATION
@@ -206,28 +206,32 @@ app.controller("mainCtrl", ['$scope', '$http', function ($scope, $http) {
 
         const strJustification = inpJustify.value;
         const sumJustification = eval(strJustification);
-        console.log(sumJustification);
+        console.log(`Evaluated sum: ${sumJustification}`);
 
         $scope.sumJustification = sumJustification;
+        $scope.verifyJustification();
     });
 
     // VERIFY JUSTIFICATION
     $scope.verifyJustification = function () {
         const idPlayer = $scope.willJustify;
         const nbGuess = $scope.numbers['nbGuess'];
+        let winner = null;
 
         if ($scope.sumJustification === nbGuess) {
-            $scope.idWinner = idPlayer;
+            winner = idPlayer;
 
-            console.log(`Player ${idPlayer} is right. Winner is ${$scope.idWinner}.`);
-            console.log("Both validates");
+            console.log(`Player ${idPlayer} is right. Winner is ${winner}.`);
         }
         else {
-            $scope.idWinner = $scope.getOpponent(idPlayer);
+            winner = $scope.getOpponent(idPlayer);
 
-            console.log(`Player ${idPlayer} is wrong. Winner is ${$scope.idWinner}.`);
+            console.log(`Player ${idPlayer} is wrong. Winner is ${winner}.`);
         }
 
+        $scope.$apply(function() {
+            $scope.idWinner = winner;
+        })
         // Add winner point.
         // ...
     }
