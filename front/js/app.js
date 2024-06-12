@@ -1,7 +1,6 @@
 const app = angular.module("DesChiffresApp", ["ngRoute"]);
 
 app.controller("mainCtrl", ['$scope', '$http', function ($scope, $http) {
-    $scope.isTimeUp = false;
     $scope.showJustify = false;
     $scope.numbers = [];
     $scope.seconds_length = 3;
@@ -56,9 +55,6 @@ app.controller("mainCtrl", ['$scope', '$http', function ($scope, $http) {
         console.log('Temps écoulé!');
 
         $scope.$apply(function () {
-            $scope.isTimeUp = true;
-            console.log("Is time up: ", $scope.isTimeUp);
-
             $scope.getInputs();
             $scope.getWinner();
         })
@@ -68,8 +64,8 @@ app.controller("mainCtrl", ['$scope', '$http', function ($scope, $http) {
         $scope.willJustify = null;
         $scope.sumJustification = null;
         $scope.idWinner = null;
-        $scope.isTimeUp = false;
         $scope.showJustify = false;
+        inpJustify.value = '';
     };
 
     // Set Values on Validation
@@ -176,30 +172,44 @@ app.controller("mainCtrl", ['$scope', '$http', function ($scope, $http) {
     const nbToolsElmnts = document.getElementsByClassName("nb-tool");
 
     $scope.justify = function () {
+        // Show justification container
         console.log(`Player ${$scope.willJustify} is justifying...`);
         $scope.showJustify = true;
 
+        // Add listeners on click on operations
         for (let i = 0; i < operationsElmnts.length; i++) {
             let op = operationsElmnts[i];
             op.addEventListener("click", function () {
-                console.log("You clicked an operation.");
-                console.log(op.textContent);
+                console.log(`You clicked an operation: ${op.textContent}`);
 
                 inpJustify.value += op.textContent + " ";
             })
         }
+        // Add listeners on click on numbers
         for (let i = 0; i < nbToolsElmnts.length; i++) {
             let nbTool = nbToolsElmnts[i];
             nbTool.addEventListener("click", function () {
-                console.log("You clicked a nb tool.");
-                console.log(nbTool.textContent);
+                console.log(`You clicked a nb: ${nbTool.textContent}`);
 
                 inpJustify.value += nbTool.textContent + " ";
+                nbTool.remove();
             })
         }
 
         $scope.sumJustification = 5;
     }
+
+    // SUBMIT JUSTIFICATION
+    const btnSubmitJustify = document.getElementById("submitJustify");
+    btnSubmitJustify.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        const strJustification = inpJustify.value;
+        const sumJustification = eval(strJustification);
+        console.log(sumJustification);
+
+        $scope.sumJustification = sumJustification;
+    });
 
     // VERIFY JUSTIFICATION
     $scope.verifyJustification = function () {

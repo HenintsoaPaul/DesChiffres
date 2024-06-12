@@ -69,7 +69,7 @@
     <!--  PLAYERS  -->
 
 <!--  JUSTIFICATION  -->
-    <div ng-show="isTimeUp && showJustify" class="center justifyContainer">
+    <div ng-show="showJustify" class="center justifyContainer">
         <h2>Player {{ willJustify }}, please provide justification!</h2>
         <div class="nbTools">
             <span ng-repeat="value in numbers['nbTools']" ng-class="'btn btn-primary nb-tool'">{{ value }}</span>
@@ -85,7 +85,7 @@
         <br>
         <form action="#">
             <input type="text" name="inpJustify" id="inpJustify">
-            <input class="btn btn-warning" type="submit" value="Justify">
+            <input class="btn btn-warning" type="submit" value="Justify" id="submitJustify">
         </form>
     </div>
 <!--  JUSTIFICATION  -->
