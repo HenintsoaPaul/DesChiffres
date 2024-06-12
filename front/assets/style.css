@@ -29,3 +29,7 @@ input {
 #timer {
     font-size: 70px;
 }
+
+.justifyContainer {
+    flex-direction: column;
+}
