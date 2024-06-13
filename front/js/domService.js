@@ -1,8 +1,4 @@
 app.service('domService', function() {
-    this.init = function() {
-        // Initialize DOM elements here
-    };
-
     // timer
     this.startTimer = function(secondsLength, doSomethingAtZero) {
         let intervalId;
@@ -90,5 +86,20 @@ app.service('domService', function() {
                 nbTool.remove();
             })
         }
+    }
+
+    // Btn Submit justify
+    this.setupBtnJustifyListeners = function($scope) {
+        const btnSubmitJustify = document.getElementById("submitJustify");
+        btnSubmitJustify.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            const strJustification = inpJustify.value;
+            const sumJustification = eval(strJustification);
+            console.log(`Evaluated sum: ${sumJustification}`);
+
+            $scope.sumJustification = sumJustification;
+            $scope.verifyJustification();
+        });
     }
 });

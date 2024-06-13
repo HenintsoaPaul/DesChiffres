@@ -12,7 +12,7 @@ public class DataController
     {
         Random rand = new Random();
         int nb = 50;
-        int nb = rand.Next(0, 1001);
+//         int nb = rand.Next(0, 1001);
 
         int[] outils = new int[7];
 

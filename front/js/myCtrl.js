@@ -21,12 +21,10 @@ app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', funct
     }
 
     const timer = document.getElementById('timer');
-    const inputP1 = document.getElementById("nbP1");
-    const inputP2 = document.getElementById("nbP2");
     const inpJustify = document.getElementById("inpJustify");
 
-    domService.init();
     domService.setupBtnValidatesListeners($scope);
+    domService.setupBtnJustifyListeners($scope);
 
     // Get numbers from C# API
     $scope.getNumbers = function () {
@@ -136,23 +134,6 @@ app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', funct
             domService.setupJustificationContainer($scope);
         }
     }
-
-    // JUSTIFICATION
-
-
-
-    // SUBMIT JUSTIFICATION
-    const btnSubmitJustify = document.getElementById("submitJustify");
-    btnSubmitJustify.addEventListener('click', function (event) {
-        event.preventDefault();
-
-        const strJustification = inpJustify.value;
-        const sumJustification = eval(strJustification);
-        console.log(`Evaluated sum: ${sumJustification}`);
-
-        $scope.sumJustification = sumJustification;
-        $scope.verifyJustification();
-    });
 
     // VERIFY JUSTIFICATION
     $scope.verifyJustification = function () {
