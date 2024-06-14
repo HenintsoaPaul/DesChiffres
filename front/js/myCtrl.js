@@ -8,6 +8,9 @@ app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', funct
     $scope.idWinner = null;
     $scope.sumJustification = null;
     $scope.nbSubmitted = null;
+    $scope.start = false;
+    $scope.tools = [];
+    $scope.guess = null;
 
     $scope.clearVariables = function () {
         $scope.p1Validation = null;
@@ -18,7 +21,55 @@ app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', funct
         $scope.showJustify = false;
         inpJustify.value = '';
         $scope.nbSubmitted = null;
+        // $scope.tools = [];
+        // $scope.guess = null;
     }
+
+    const btnStart = document.getElementById("btnStart");
+    btnStart.addEventListener("click", function () {
+        $scope.$apply(function() {
+            // Get inputs from the inputs
+            console.log("guess: ",$scope.myNbGuess);
+            console.log("tool1: ", $scope.myNbTool1);
+            console.log("tool2: ", $scope.myNbTool2);
+            console.log("tool3: ", $scope.myNbTool3);
+            console.log("tool4: ", $scope.myNbTool4);
+            console.log("tool5: ", $scope.myNbTool5);
+            console.log("tool6: ", $scope.myNbTool6);
+            console.log("tool7: ", $scope.myNbTool7);
+
+            $scope.guess = $scope.myNbGuess;
+            $scope.tools = [
+                $scope.myNbTool1,
+                $scope.myNbTool2,
+                $scope.myNbTool3,
+                $scope.myNbTool4,
+                $scope.myNbTool5,
+                $scope.myNbTool6,
+                $scope.myNbTool7,
+            ];
+            if ($scope.guess !== undefined) {
+                let allOk = true;
+                for (let i = 0; i < $scope.tools.length; i++) {
+                    if ($scope.tools[i] === undefined) {
+                        allOk = false;
+                        break;
+                    }
+                }
+
+                if (allOk) {
+                    console.log(`defined nbGuess`);
+                    console.log(`defined nbTools`);
+
+                    $scope.start = true;
+
+                    // apiService.sendData($scope.guess, $scope.tools);
+
+                    $scope.getNumbers();
+                }
+            }
+        })
+    })
 
     const timer = document.getElementById('timer');
     const inpJustify = document.getElementById("inpJustify");
@@ -28,13 +79,20 @@ app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', funct
 
     // Get numbers from C# API
     $scope.getNumbers = function () {
-        return apiService.getData()
-            .then(function (response) {
-                console.log(response.data);
-                $scope.numbers = response.data;
-            }).catch(function (error) {
-                console.error("Error getting JSON data: ", error);
-            });
+
+        // apiService.getData()
+        //     .then(function (response) {
+        //         $scope.numbers = response.data;
+        //     }).catch(function (error) {
+        //         console.error("Error getting JSON data: ", error);
+        //     });
+
+        $scope.numbers = {
+            'nbGuess' : $scope.guess,
+            'nbTools' : $scope.tools
+        }
+
+        console.log($scope.numbers);
     };
 
     $scope.timerValue = function (totalSeconds) {
@@ -46,7 +104,7 @@ app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', funct
     // Timer
     $scope.startCountdown = function () {
         $scope.clearVariables();
-        $scope.getNumbers();
+        // $scope.getNumbers();
         domService.startTimer($scope.seconds_length, $scope.doSomethingAtZero);
     };
 
