@@ -18,88 +18,115 @@
 </head>
 <body ng-app="DesChiffresApp">
 <div ng-controller="mainCtrl">
-
-    <div class="card">
-        <div class="card-body">
-            <div class="timerContainer">
-                <span id="timer">{{ timerValue(seconds_length) }}</span>
-                <button ng-click="startCountdown()" class="btn btn-success" id="startBtn">Start</button>
+    <div ng-show="!start">
+        <!-- INPUTS -->
+        <div class="setNumbers">
+            <div class="guess" ng-init="myNbGuess=12">
+                Number to Guess:
+                <input type="number" ng-model="myNbGuess">
             </div>
+            <hr>
+            <div class="tools">
+                Numbers to Use:
+                <input required type="number" ng-model="myNbTool1" ng-init="myNbTool1=10">
+                <input required type="number" ng-model="myNbTool2" ng-init="myNbTool2=2">
+                <input required type="number" ng-model="myNbTool3" ng-init="myNbTool3=1">
+                <input required type="number" ng-model="myNbTool4" ng-init="myNbTool4=1">
+                <input required type="number" ng-model="myNbTool5" ng-init="myNbTool5=1">
+                <input required type="number" ng-model="myNbTool6" ng-init="myNbTool6=1">
+                <input required type="number" ng-model="myNbTool7" ng-init="myNbTool7=1">
+            </div>
+            <br>
+            <button id="btnStart">Start the Game</button>
         </div>
+        <!-- INPUTS -->
     </div>
 
-    <!--  NUMBERS  -->
-    <div class="row center" id="nbContainer">
-        <div class="center" id="nbGuessContainer">
-            <span id="nbGuess-item">{{ numbers['nbGuess'] }}</span>
+    <div ng-show="start">
+        <div class="card">
+            <div class="card-body">
+                <div class="timerContainer">
+                    <span id="timer">{{ timerValue(seconds_length) }}</span>
+                    <button ng-click="startCountdown()" class="btn btn-success" id="startBtn">Start</button>
+                </div>
+            </div>
         </div>
 
-        <div class="center nbToolsContainer">
-            <span ng-repeat="value in numbers['nbTools']" ng-class="'btn btn-primary'">{{ value }}</span>
+        <!--  NUMBERS  -->
+        <div class="row center" id="nbContainer">
+            <div class="center" id="nbGuessContainer">
+                <span id="nbGuess-item">{{ numbers['nbGuess'] }}</span>
+            </div>
+
+            <div class="center nbToolsContainer">
+                <span ng-repeat="value in numbers['nbTools'] track by $index" ng-class="'btn btn-primary'">{{ value }}</span>
+            </div>
         </div>
+        <!--  NUMBERS  -->
+
+
+        <!--  PLAYERS  -->
+        <div class="row playersContainer">
+            <div class="col-6 playerContainer center" id="p1Container">
+                <div class="pointContainer">
+                    <!--            <span class="player">Player 1</span>-->
+                    <span class="score">0 Points</span>
+                </div>
+                <div class="validationContainer center">
+                    <form action="#" method="POST">
+                        <input type="number" name="nbP1" id="nbP1"/>
+                        <input id="btnSubmitP1" class="btn btn-success" type="button" value="Submit"/>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-6 playerContainer center" id="p2Container">
+                <div class="pointContainer">
+                    <!--            <span class="player">Player 2</span>-->
+                    <span class="score">0 Points</span>
+                </div>
+                <div class="validationContainer center">
+                    <form action="#" method="POST">
+                        <input type="number" name="nbP2" id="nbP2"/>
+                        <input id="btnSubmitP2" class="btn btn-success" type="button" value="Submit"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--  PLAYERS  -->
+
+        <!--  JUSTIFICATION  -->
+        <div ng-show="showJustify" class="center justifyContainer">
+
+            <!-- MESSAGE -->
+            <h1 ng-if="idWinner !== null && idWinner === willJustify" class="alert alert-success">Winner is {{ idWinner
+                }}</h1>
+            <h1 ng-if="idWinner !== null && idWinner !== willJustify" class="alert alert-danger">Winner is {{ idWinner
+                }}</h1>
+            <h2 ng-if="idWinner === null">Player {{ willJustify }}, please provide justification!</h2>
+            <!-- MESSAGE -->
+
+            <hr>
+            <div class="center nbToolsContainer">
+                <span ng-repeat="value in numbers['nbTools'] track by $index" ng-class="'btn btn-primary nb-tool'">{{ value }}</span>
+            </div>
+            <br>
+            <div class="operations">
+                <span class="btn btn-danger op" id="operation_+">+</span>
+                <span class="btn btn-danger op" id="operation_-">-</span>
+                <span class="btn btn-danger op" id="operation_*">*</span>
+                <span class="btn btn-danger op" id="operation_/">/</span>
+                <span class="btn btn-danger op" id="operation_(">(</span>
+                <span class="btn btn-danger op" id="operation_)">)</span>
+            </div>
+            <br>
+            <form action="#">
+                <input type="text" name="inpJustify" id="inpJustify">
+                <input class="btn btn-warning" type="submit" value="Justify" id="submitJustify">
+            </form>
+        </div>
+        <!--  JUSTIFICATION  -->
     </div>
-    <!--  NUMBERS  -->
-
-
-    <!--  PLAYERS  -->
-    <div class="row playersContainer">
-        <div class="col-6 playerContainer center" id="p1Container">
-            <div class="pointContainer">
-                <!--            <span class="player">Player 1</span>-->
-                <span class="score">0 Points</span>
-            </div>
-            <div class="validationContainer center">
-                <form action="#" method="POST">
-                    <input type="number" name="nbP1" id="nbP1"/>
-                    <input id="btnSubmitP1" class="btn btn-success" type="button" value="Submit"/>
-                </form>
-            </div>
-        </div>
-
-        <div class="col-6 playerContainer center" id="p2Container">
-            <div class="pointContainer">
-                <!--            <span class="player">Player 2</span>-->
-                <span class="score">0 Points</span>
-            </div>
-            <div class="validationContainer center">
-                <form action="#" method="POST">
-                    <input type="number" name="nbP2" id="nbP2"/>
-                    <input id="btnSubmitP2" class="btn btn-success" type="button" value="Submit"/>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!--  PLAYERS  -->
-
-    <!--  JUSTIFICATION  -->
-    <div ng-show="showJustify" class="center justifyContainer">
-
-        <!-- MESSAGE -->
-        <h1 ng-if="idWinner !== null && idWinner === willJustify" class="alert alert-success">Winner is {{ idWinner }}</h1>
-        <h1 ng-if="idWinner !== null && idWinner !== willJustify" class="alert alert-danger">Winner is {{ idWinner }}</h1>
-        <h2 ng-if="idWinner === null">Player {{ willJustify }}, please provide justification!</h2>
-        <!-- MESSAGE -->
-
-        <hr>
-        <div class="center nbToolsContainer">
-            <span ng-repeat="value in numbers['nbTools']" ng-class="'btn btn-primary nb-tool'">{{ value }}</span>
-        </div>
-        <br>
-        <div class="operations">
-            <span class="btn btn-danger op" id="operation_+">+</span>
-            <span class="btn btn-danger op" id="operation_-">-</span>
-            <span class="btn btn-danger op" id="operation_*">*</span>
-            <span class="btn btn-danger op" id="operation_/">/</span>
-            <span class="btn btn-danger op" id="operation_(">(</span>
-            <span class="btn btn-danger op" id="operation_)">)</span>
-        </div>
-        <br>
-        <form action="#">
-            <input type="text" name="inpJustify" id="inpJustify">
-            <input class="btn btn-warning" type="submit" value="Justify" id="submitJustify">
-        </form>
-    </div>
-    <!--  JUSTIFICATION  -->
 </div>
 </body>
 </html>

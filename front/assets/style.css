@@ -33,3 +33,10 @@ input {
 .justifyContainer {
     flex-direction: column;
 }
+
+.setNumbers {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
