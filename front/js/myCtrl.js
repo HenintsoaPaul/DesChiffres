@@ -1,5 +1,6 @@
-app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', 'timerService',
-    function ($scope, $http, apiService, domService, timerService) {
+app.controller("mainCtrl", ['$scope', '$http', 'apiService',
+    'domService', 'timerService', 'inputsService',
+    function ($scope, $http, apiService, domService, timerService, inputsService) {
     $scope.showJustify = false;
     $scope.numbers = [];
     $scope.operationStr = undefined;
@@ -37,30 +38,21 @@ app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', 'time
         domService.showSolution($scope);
     };
 
-            if ($scope.guess !== undefined) {
-                let allOk = true;
-                for (let i = 0; i < $scope.tools.length; i++) {
-                    if ($scope.tools[i] === undefined) {
-                        allOk = false;
-                        break;
-                    }
-                }
+    // Inputs(Set numbers)
+    $scope.validateInputs = function () {
+        inputsService.validateInputs($scope);
+    };
 
-                if (allOk) {
-                    console.log("All numbers defined.");
-                    $scope.start = true;
-
-                    const jsonNumbers = {
-                        NbGuess: $scope.guess,
-                        NbTools: $scope.tools,
-                    }
-                    apiService.sendData(jsonNumbers);
-
-                    $scope.getNumbers();
-                }
+    // Get numbers from Inputs then send it to C# API then re-get data from C# API
+    $scope.setThenGetNumbers = function (jsonData) {
+        apiService.sendData(jsonData).then(data => {
+            console.log(data);
+            $scope.numbers = {
+                'nbGuess': data.nbGuess,
+                'nbTools': data.nbTools
             }
-        })
-    })
+        });
+    };
 
     const timer = document.getElementById('timer');
     const inpJustify = document.getElementById("inpJustify");
