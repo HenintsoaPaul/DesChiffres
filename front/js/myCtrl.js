@@ -21,8 +21,11 @@ app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', funct
         $scope.showJustify = false;
         inpJustify.value = '';
         $scope.nbSubmitted = null;
-        // $scope.tools = [];
-        // $scope.guess = null;
+    }
+
+    $scope.showSolution = function () {
+        console.log("Show me the solution...");
+        apiService.getSolution();
     }
 
     const btnStart = document.getElementById("btnStart");
@@ -30,15 +33,6 @@ app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', funct
         $scope.$apply(function () {
             // Get inputs from the inputs
             $scope.guess = $scope.myNbGuess;
-            $scope.tools = [
-                $scope.myNbTool1,
-                $scope.myNbTool2,
-                $scope.myNbTool3,
-                $scope.myNbTool4,
-                $scope.myNbTool5,
-                $scope.myNbTool6,
-                $scope.myNbTool7,
-            ];
             if ($scope.guess !== undefined) {
                 let allOk = true;
                 for (let i = 0; i < $scope.tools.length; i++) {

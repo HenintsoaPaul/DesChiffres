@@ -21,20 +21,20 @@
     <div ng-show="!start">
         <!-- INPUTS -->
         <div class="setNumbers">
-            <div class="guess" ng-init="myNbGuess=12">
+            <div class="guess" ng-init="myNbGuess=127">
                 Number to Guess:
                 <input type="number" ng-model="myNbGuess">
             </div>
             <hr>
             <div class="tools">
                 Numbers to Use:
-                <input required type="number" ng-model="myNbTool1" ng-init="myNbTool1=10">
-                <input required type="number" ng-model="myNbTool2" ng-init="myNbTool2=2">
-                <input required type="number" ng-model="myNbTool3" ng-init="myNbTool3=1">
-                <input required type="number" ng-model="myNbTool4" ng-init="myNbTool4=1">
-                <input required type="number" ng-model="myNbTool5" ng-init="myNbTool5=1">
-                <input required type="number" ng-model="myNbTool6" ng-init="myNbTool6=1">
-                <input required type="number" ng-model="myNbTool7" ng-init="myNbTool7=1">
+                <input required type="number" ng-model="tools[0]" ng-init="tools[0]=10">
+                <input required type="number" ng-model="tools[1]" ng-init="tools[1]=24">
+                <input required type="number" ng-model="tools[2]" ng-init="tools[2]=11">
+                <input required type="number" ng-model="tools[3]" ng-init="tools[3]=31">
+                <input required type="number" ng-model="tools[4]" ng-init="tools[4]=15">
+                <input required type="number" ng-model="tools[5]" ng-init="tools[5]=9">
+                <input required type="number" ng-model="tools[6]" ng-init="tools[6]=8">
             </div>
             <br>
             <button id="btnStart">Start the Game</button>
@@ -47,7 +47,10 @@
             <div class="card-body">
                 <div class="timerContainer">
                     <span id="timer">{{ timerValue(seconds_length) }}</span>
-                    <button ng-click="startCountdown()" class="btn btn-success" id="startBtn">Start</button>
+                    <div class="my-buttons">
+                        <button ng-click="startCountdown()" class="btn btn-success" id="startBtn">Start</button>
+                        <button ng-click="showSolution()" class="btn btn-info">Solution</button>
+                    </div>
                 </div>
             </div>
         </div>
