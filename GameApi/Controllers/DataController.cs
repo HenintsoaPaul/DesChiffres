@@ -1,36 +1,43 @@
+using GameApi.Helpers;
+using GameApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ApiTest.Controllers;
+namespace GameApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class DataController
+public class DataController : ControllerBase
 {
-    [HttpGet]
-    [Route("get-numbers")]
-    public ActionResult GetNbGuess()
+    private string _filePath = "./data/database.txt";
+
+    [HttpPost]
+    [Route("set")]
+    public ActionResult SetNumbers([FromBody] RequestModel model)
     {
-        Random rand = new Random();
-        int nb = 50;
-//         int nb = rand.Next(0, 1001);
-
-        int[] outils = new int[7];
-
-        outils[0] = 10;
-        outils[1] = 5;
-        for (int i = 2; i < 7; i++)
+        if (model == null || model.NbGuess == null || model.NbGuess < 0
+            || model.NbTools == null || model.NbTools.Count == 0)
         {
-            outils[i] = rand.Next(0, 101);
+            return BadRequest("Invalid data!");
         }
 
-//         for (int i = 0; i < 7; i++)
-//         {
-//             outils[i] = rand.Next(0, 101);
-//         }
-        return new JsonResult(new
-        {
-            nbGuess = nb,
-            nbTools = outils
-        });
+        string jsonString = FileHelper.SaveJson(model, _filePath);
+        Console.WriteLine($"Wrote: {jsonString}\n ---END POST---");
+        return new JsonResult(model);
+    }
+
+    [HttpGet]
+    [Route("get")]
+    public ActionResult GiveSolution()
+    {
+        RequestModel? modelRetrieved = FileHelper.LoadJson(_filePath);
+        if (modelRetrieved == null) return BadRequest("No data found");
+        int guess = modelRetrieved.NbGuess;
+        List<int> tools = modelRetrieved.NbTools;
+
+        Console.WriteLine($"Gonna perform operations with t: {guess} | listNbs: {string.Join(", ", tools)}");
+        List<List<int>> operations = BestOperationHelper.getSolution(tools, guess);
+        Console.WriteLine("---END GET---");
+
+        return new JsonResult(operations);
     }
 }
