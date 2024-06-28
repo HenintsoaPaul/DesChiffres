@@ -1,7 +1,7 @@
 app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', function ($scope, $http, apiService, domService) {
     $scope.showJustify = false;
     $scope.numbers = [];
-    $scope.seconds_length = 5;
+    $scope.seconds_length = 30;
     $scope.p1Validation = null;
     $scope.p2Validation = null;
     $scope.willJustify = null; // The player that will justify.
@@ -27,17 +27,8 @@ app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', funct
 
     const btnStart = document.getElementById("btnStart");
     btnStart.addEventListener("click", function () {
-        $scope.$apply(function() {
+        $scope.$apply(function () {
             // Get inputs from the inputs
-            console.log("guess: ",$scope.myNbGuess);
-            console.log("tool1: ", $scope.myNbTool1);
-            console.log("tool2: ", $scope.myNbTool2);
-            console.log("tool3: ", $scope.myNbTool3);
-            console.log("tool4: ", $scope.myNbTool4);
-            console.log("tool5: ", $scope.myNbTool5);
-            console.log("tool6: ", $scope.myNbTool6);
-            console.log("tool7: ", $scope.myNbTool7);
-
             $scope.guess = $scope.myNbGuess;
             $scope.tools = [
                 $scope.myNbTool1,
@@ -58,12 +49,10 @@ app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', funct
                 }
 
                 if (allOk) {
-                    console.log(`defined nbGuess`);
-                    console.log(`defined nbTools`);
-
+                    console.log("All numbers defined.");
                     $scope.start = true;
 
-                    // apiService.sendData($scope.guess, $scope.tools);
+                    apiService.sendData($scope.guess, $scope.tools);
 
                     $scope.getNumbers();
                 }
@@ -88,8 +77,8 @@ app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', funct
         //     });
 
         $scope.numbers = {
-            'nbGuess' : $scope.guess,
-            'nbTools' : $scope.tools
+            'nbGuess': $scope.guess,
+            'nbTools': $scope.tools
         }
 
         console.log($scope.numbers);
