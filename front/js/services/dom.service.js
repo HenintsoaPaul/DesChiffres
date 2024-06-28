@@ -1,4 +1,9 @@
-app.service('domService', function() {
+app.service('domService', ['apiService', function(apiService) {
+    // solution
+    this.showSolution = function($scope) {
+        apiService.getSolution().then(str => $scope.operationStr = str);
+    };
+
     // timer
     this.startTimer = function(secondsLength, doSomethingAtZero) {
         let intervalId;
@@ -102,4 +107,4 @@ app.service('domService', function() {
             $scope.verifyJustification();
         });
     }
-});
+}] );

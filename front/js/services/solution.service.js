@@ -1,11 +1,13 @@
 app.service('solutionService', function () {
     this.interpret = function (data) {
-        const operations = this.buildOperationsString(data);
+        let operations = this.buildOperationsString(data),
+            sum = eval(operations);
+        operations += " = " + sum;
         console.log(`operations: ${operations}`);
         return operations;
     };
 
-    this.buildOperationsString = function(data) {
+    this.buildOperationsString = function (data) {
         const operators = this.getListOperators(data);
         let operations = `${data[0][1]} ${operators[0]} ${data[0][2]}`;
         for (let i = 1; i < data.length; i++) {
@@ -14,11 +16,11 @@ app.service('solutionService', function () {
         return operations;
     };
 
-    this.getListOperators = function(data) {
+    this.getListOperators = function (data) {
         return data.map(item => this.getOperator(item[3]));
     };
 
-    this.getOperator = function(idOperator) {
+    this.getOperator = function (idOperator) {
         const operators = {
             0: '*',
             1: '+',

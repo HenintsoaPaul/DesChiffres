@@ -1,7 +1,8 @@
 app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', function ($scope, $http, apiService, domService) {
     $scope.showJustify = false;
     $scope.numbers = [];
-    $scope.seconds_length = 30;
+    $scope.operationStr = undefined;
+    $scope.seconds_length = 10;
     $scope.p1Validation = null;
     $scope.p2Validation = null;
     $scope.willJustify = null; // The player that will justify.
@@ -21,11 +22,12 @@ app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', funct
         $scope.showJustify = false;
         inpJustify.value = '';
         $scope.nbSubmitted = null;
+        $scope.operationStr = undefined;
     }
 
+    // Get then Show suggestion(solution)
     $scope.showSolution = function () {
-        console.log("Show me the solution...");
-        apiService.getSolution();
+        domService.showSolution($scope);
     }
 
     const btnStart = document.getElementById("btnStart");
@@ -33,6 +35,7 @@ app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', funct
         $scope.$apply(function () {
             // Get inputs from the inputs
             $scope.guess = $scope.myNbGuess;
+
             if ($scope.guess !== undefined) {
                 let allOk = true;
                 for (let i = 0; i < $scope.tools.length; i++) {
@@ -46,7 +49,11 @@ app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', funct
                     console.log("All numbers defined.");
                     $scope.start = true;
 
-                    apiService.sendData($scope.guess, $scope.tools);
+                    const jsonNumbers = {
+                        NbGuess: $scope.guess,
+                        NbTools: $scope.tools,
+                    }
+                    apiService.sendData(jsonNumbers);
 
                     $scope.getNumbers();
                 }
@@ -62,20 +69,10 @@ app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', funct
 
     // Get numbers from C# API
     $scope.getNumbers = function () {
-
-        // apiService.getData()
-        //     .then(function (response) {
-        //         $scope.numbers = response.data;
-        //     }).catch(function (error) {
-        //         console.error("Error getting JSON data: ", error);
-        //     });
-
         $scope.numbers = {
             'nbGuess': $scope.guess,
             'nbTools': $scope.tools
         }
-
-        console.log($scope.numbers);
     };
 
     $scope.timerValue = function (totalSeconds) {
