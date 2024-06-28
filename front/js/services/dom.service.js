@@ -1,5 +1,5 @@
 app.service('domService', ['apiService', function(apiService) {
-    // solution
+    // Solution
     this.showSolution = function($scope) {
         apiService.getSolution().then(str => $scope.operationStr = str);
     };
