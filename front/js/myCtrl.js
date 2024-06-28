@@ -1,4 +1,5 @@
-app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', function ($scope, $http, apiService, domService) {
+app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', 'timerService',
+    function ($scope, $http, apiService, domService, timerService) {
     $scope.showJustify = false;
     $scope.numbers = [];
     $scope.operationStr = undefined;
@@ -25,16 +26,16 @@ app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', funct
         $scope.operationStr = undefined;
     }
 
-    // Get then Show suggestion(solution)
+    // DOM
+    // Timer
+    $scope.startTimer = function () {
+        timerService.start($scope);
+    };
+
+    // Suggestion(Solution)
     $scope.showSolution = function () {
         domService.showSolution($scope);
-    }
-
-    const btnStart = document.getElementById("btnStart");
-    btnStart.addEventListener("click", function () {
-        $scope.$apply(function () {
-            // Get inputs from the inputs
-            $scope.guess = $scope.myNbGuess;
+    };
 
             if ($scope.guess !== undefined) {
                 let allOk = true;
@@ -67,26 +68,11 @@ app.controller("mainCtrl", ['$scope', '$http', 'apiService', 'domService', funct
     domService.setupBtnValidatesListeners($scope);
     domService.setupBtnJustifyListeners($scope);
 
-    // Get numbers from C# API
-    $scope.getNumbers = function () {
-        $scope.numbers = {
-            'nbGuess': $scope.guess,
-            'nbTools': $scope.tools
-        }
-    };
-
     $scope.timerValue = function (totalSeconds) {
         const minutes = Math.floor(totalSeconds / 60);
         const seconds = totalSeconds % 60;
         return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
-
-    // Timer
-    $scope.startCountdown = function () {
-        $scope.clearVariables();
-        // $scope.getNumbers();
-        domService.startTimer($scope.seconds_length, $scope.doSomethingAtZero);
-    };
 
     // When Timer 00:00
     $scope.doSomethingAtZero = function () {
