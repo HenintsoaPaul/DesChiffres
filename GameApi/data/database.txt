@@ -1,0 +1,1 @@
+{"NbGuess":15,"NbTools":[6,5,2]}
